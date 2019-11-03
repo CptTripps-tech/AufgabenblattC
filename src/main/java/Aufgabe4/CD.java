@@ -1,16 +1,19 @@
 package Aufgabe4;
 
-public class CD extends Medium{
+public class CD extends Medium {
     private String Label;
     private String Kuenstler;
 
+    /**@param Titel         Der Titel der CD
+     * @param Kuenstler     Der Kuenstler der CD
+     * @param Label         Das Label der CD*/
     public CD(String Titel,String Kuenstler,String Label){
         super(Titel);
         setKuenstler(Kuenstler);
         setLabel(Label);
     }
 
-
+    /**@return Label der CD*/
     public String getLabel(){
         return Label;
     }
@@ -23,6 +26,7 @@ public class CD extends Medium{
         this.Label = Label;
     }
 
+    /**@return Kuenstler der CD*/
     public String getKuenstler(){
         return Kuenstler;
     }
@@ -36,11 +40,6 @@ public class CD extends Medium{
     }
 
     @Override
-    public int CompareTo(Medium o) {
-        return 0;
-    }
-
-    @Override
     public String calculateRepresentation() {
         StringBuilder cd=new StringBuilder();
         cd.append("Titel:"+getTitel()+"\n");
@@ -49,8 +48,4 @@ public class CD extends Medium{
         return cd.toString();
     }
 
-    @Override
-    public int compareTo(Medium medium) {
-        return 0;
-    }
 }

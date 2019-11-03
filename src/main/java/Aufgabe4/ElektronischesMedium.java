@@ -17,8 +17,12 @@ public class ElektronischesMedium extends Medium {
     }
 
     @Override
-    public int CompareTo(Medium o) {
-        return 0;
+    public int compareTo(Medium medium) {
+        String comparevalue=medium.getTitel();
+
+        int result=0;
+        result=this.getTitel().compareTo(medium.getTitel());
+        return result;
     }
 
     public  boolean checkURL(String URL){
@@ -42,9 +46,6 @@ public class ElektronischesMedium extends Medium {
         return em.toString();
     }
 
-    @Override
-    public int compareTo(Medium medium) {
-        return 0;
-    }
+
 }
 

@@ -8,6 +8,11 @@ public class Buch extends Medium {
     private String ISBN;
     private String Verfasser;
 
+    /** @param Titel            Der Titel des Buches
+     * @param Erscheinungsjahr  Das Erscheinungsjahr des Buches
+     * @param Verlag            Der Verlag des Buches
+     * @param ISBN              Die ISBN des Buches
+     * @param Verfasser         Der Verfasser des Buches*/
     public Buch(String Titel,int Erscheinungsjahr,String Verlag,String ISBN,String Verfasser) {
         super(Titel);
         setVerfasser(Verfasser);
@@ -17,6 +22,7 @@ public class Buch extends Medium {
         checkISBN(ISBN);
     }
 
+
     public void setErscheinungsjahr(int Erscheinungsjahr) {
         if (Erscheinungsjahr == 0) {
             throw new IllegalArgumentException("Das Erscheinungsjahr des Buches fehlt!");
@@ -24,6 +30,8 @@ public class Buch extends Medium {
         this.Erscheinungsjahr = Erscheinungsjahr;
 
     }
+
+    /**@return  Erscheinungsjahr*/
     public int getErscheinungsjahr(){
         return this.Erscheinungsjahr;
     }
@@ -58,10 +66,12 @@ public class Buch extends Medium {
 
     }
 
+    /**@return Verfasser des Buches*/
     public String getVerfasser(){
         return this.Verfasser;
     }
 
+    /** Prüfroutine zur Überprüfung, ob die angegebene ISBN eine gültige ISBN ist.*/
     public boolean checkISBN(String ISBN) {
         int[] isbn10 = new int[10];
         int[] isbn13 = new int[13];
@@ -110,12 +120,6 @@ public class Buch extends Medium {
         throw new NumberFormatException("Die ISBN-13 ist nicht korrekt!");
     }
 
-
-    @Override
-    public int CompareTo(Medium o) {
-        return 0;
-    }
-
     @Override
     public String calculateRepresentation() {
         StringBuilder bs=new StringBuilder();
@@ -125,10 +129,5 @@ public class Buch extends Medium {
         bs.append("ISBN:"+ISBN+"\n");
         bs.append("Verfasser:"+Verfasser+"\n");
         return bs.toString();
-    }
-
-    @Override
-    public int compareTo(Medium medium) {
-        return 0;
     }
 }

@@ -1,10 +1,14 @@
 package Aufgabe4;
 
-public class Zeitschrift extends Medium{
+public class Zeitschrift extends Medium {
     private String ISSN;
     private int Volume;
     private  int Nummer;
 
+    /**@param Titel  Titel der Zeitschrift
+     * @param Nummer Die Ausgabennumer der Zeitschrift
+     * @param ISSN   Die ISSN der Zeitschrift
+     * @param Volume Die Volume-Nummer der Zeitschrift*/
     public Zeitschrift(String Titel,int Nummer,int Volume,String ISSN){
         super(Titel);
         setNummer(Nummer);
@@ -19,6 +23,7 @@ public class Zeitschrift extends Medium{
         this.Nummer = Nummer;
     }
 
+    /**@return Nummer der Zeitschrift*/
     public int getNummer(){
         return this.Nummer;
     }
@@ -31,6 +36,7 @@ public class Zeitschrift extends Medium{
         this.Volume=Volume;
     }
 
+    /**@return Volume der Zeitschrift*/
     public int getVolume(){
         return this.Volume;
     }
@@ -43,13 +49,9 @@ public class Zeitschrift extends Medium{
         this.ISSN = ISSN;
     }
 
+    /**@return ISSN der Zeitschrift*/
     public String getISSN(){
         return this.ISSN;
-    }
-
-    @Override
-    public int CompareTo(Medium o) {
-        return 0;
     }
 
     @Override
@@ -62,8 +64,4 @@ public class Zeitschrift extends Medium{
         return zs.toString();
     }
 
-    @Override
-    public int compareTo(Medium medium) {
-        return 0;
-    }
 }

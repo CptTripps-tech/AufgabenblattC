@@ -1,5 +1,11 @@
 package Aufgabe4;
 
+import java.util.Collections;
+/**Das Programm Bibliothek kann verwendet werden, um eine virtuelle Bibliothek zu erstellen, die verschiedene Medien
+ * speichern kann. Diese Bibliothek kann auf Wunsch in eine Textdatei gespeichert werden.
+ * @Author Andy Gahler
+ * @since 03.11.2019
+ **/
 public class Bibliothek {
     public static void main(String[] args){
 
@@ -11,10 +17,14 @@ public class Bibliothek {
                 "Bibliographisches Institut, Mannheim","3-411-04013-0","-"));
         zettelkasten.addMedium(new Zeitschrift("Der Spiegel",6,54,"0038-7452"));
 
-        zettelkasten.sort();
+        zettelkasten.sort("A","Z");
+
 
         for(Medium medium: zettelkasten){
             System.out.println(medium.calculateRepresentation());
         }
+
+        zettelkasten.save(zettelkasten,"bib.txt");
+
     }
 }
