@@ -3,105 +3,119 @@ package Aufgabe4;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.*;
 
-public class Zettelkasten implements Iterator<Medium>,Iterable<Medium>,Persistency {
+public class Zettelkasten implements Iterable<Medium>,Persistency,Comparable<Medium> {
     private ArrayList<Medium> myZettelkasten;
-    private int sortCounter = 0;
+    private String SORTED = "0";
 
-    /**Erstellt einen Zettelkasten in Form einer Arraylist für die Medien*/
+    /**
+     * Erstellt einen Zettelkasten in Form einer Arraylist für die Medien
+     */
     public Zettelkasten() {
         myZettelkasten = new ArrayList<Medium>();
     }
 
-    /**@param medium    Hinzufügen des Mediums zum Zettelkasten
-     * @return true     Medium erfolgreich hinzugefügt
-     * @return false    Medium nicht erfolgreich hinzugefügt*/
+    /**
+     * @param medium Hinzufügen des Mediums zum Zettelkasten
+     * @return false    Medium nicht erfolgreich hinzugefügt
+     */
     public boolean addMedium(Medium medium) {
         return myZettelkasten.add(medium);
     }
 
-    /**@param Titel Löschen des Mediums aus dem Zettelkastens anhand des Titels
-     * @return true     Medium erfolgreich entfernt
-     * @return false    Medium nicht erfolgreich entfernt*/
-    public boolean dropMedium(String Titel) {
-        int i = 0;
-        String dm;
-        dm = myZettelkasten.get(i).getTitel();
-
-        while (!dm.equals(Titel) && i < myZettelkasten.size()) {
-            dm = myZettelkasten.get(i).getTitel();
-            i++;
+    /**
+     * @param Titel Löschen des Mediums aus dem Zettelkastens anhand des Titels
+     * @return false    Medium nicht erfolgreich entfernt
+     */
+    public boolean dropMedium(String Titel) throws DuplicateEntryException {
+         List<Medium> result=findMedium(Titel);
+        if(result.size()>1){
+            throw new DuplicateEntryException("Mehrfache Einträge");
         }
-        if (dm.equals(Titel)) {
-            myZettelkasten.remove(i);
-        } else {
-            throw new ArrayStoreException("Der Titel wurde nicht gefunden");
+        else if(result.size()<1){
+            return false;
+        }
+        else{
+            return myZettelkasten.remove(result.get(0));
+        }
+    }
+
+    public boolean dropDuplicate(String Titel){
+        int auswahl,index = 0;
+        List<Medium> auswahlListe=findMedium(Titel);
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Art der Löschung: 1-Bestimmte");
+        System.out.print("                  2-Alle\n");
+        System.out.print("Auswahl:");
+        auswahl=sc.nextInt();
+
+        switch (auswahl){
+            case 1:
+                for (Medium medium : auswahlListe) {
+                    index = auswahlListe.indexOf(medium);
+                    System.out.print("Eintrag:" + index+"\n");
+                    System.out.println("Medium:" + auswahlListe.get(index).calculateRepresentation());
+                }
+                System.out.println("Nummer des Eintrags:");
+                auswahl = sc.nextInt();
+                 myZettelkasten.remove(auswahlListe.get(auswahl));
+                break;
+
+            case 2:
+                for(int i=0;i<auswahlListe.size();i++){
+                    myZettelkasten.remove(auswahlListe.get(i));
+                }
+                break;
         }
         return true;
     }
 
     /**@param Titel Finden eines Mediums im Zettelkasten anhand des Titels
      * @return      Liefert das gefundene Medium zurück*/
-    public Medium findMedium(String Titel) {
-        int j = 0;
-        String fm,nm;
-        fm = myZettelkasten.get(j).getTitel();
+        public List<Medium> findMedium (String Titel) {
+            List<Medium> multipleMed = new ArrayList<Medium>();
+           for(Medium medium: myZettelkasten){
+               if(medium.getTitel().equals(Titel)){
+                   multipleMed.add(medium);
+                   Collections.sort(multipleMed,Collections.reverseOrder());
+               }
+           }
+            return multipleMed;
+          }
 
-        while (!fm.equals(Titel) && j < myZettelkasten.size()) {
-            fm = myZettelkasten.get(j).getTitel();
-            j++;
-        }
-        if (fm.equals(Titel)) {
-            return myZettelkasten.get(j);
-        } else {
-            return null;
-        }
-    }
 
-    /**Sortieren des Zettelkastens anhand zwei Parameter
-     * @param  a        Der erste Sortier-Parameter
-     * @param  b        Der zweite Sortier-Paramater
-     * @return true     Sortieren hat funktioniert
-     * @return false    Sortieren hat nicht funktioniert*/
-    public boolean sort(String a, String b) {
-        if (sortCounter == 0) {
-            if (a == "A" && b == "Z") {
+
+
+        /**Sortieren des Zettelkastens anhand zwei Parameter
+         * @param  p        Der erste Sortier-Parameter
+         * @return true     Sortieren hat funktioniert
+         * @return false    Sortieren hat nicht funktioniert*/
+    public boolean sort(String p) {
+        if (p=="AZ") {
+            if(SORTED.equals("AZ")){
+                return false;
+            }
                 Collections.sort(myZettelkasten);
-                sortCounter++;
+            SORTED="AZ";
             }
-            if (a == "Z" && b == "A") {
+            if (p=="ZA") {
+                if(SORTED.equals("ZA")){
+                    return false;
+                }
                 Collections.sort(myZettelkasten, Collections.reverseOrder());
-                sortCounter++;
+                SORTED="ZA";
             }
+            return true;
         }
-        if (sortCounter == 1) {
-            return false;
+
+        public String getSORTED(){
+        return SORTED;
         }
-        return false;
-    }
-
-
-    Iterator<Medium> zk_iterator;
-
-    /**@return true     Medium hat Nachfolger
-     * @return false    Medium hat keinen Nachfolger*/
-    @Override
-    public boolean hasNext() {
-        return (zk_iterator != null && zk_iterator.next() != null);
-    }
-
-    /**@return Das nächste Medium in der Liste*/
-    @Override
-    public Medium next() {
-        return zk_iterator.next();
-    }
 
     @Override
     public Iterator<Medium> iterator() {
-        return zk_iterator = myZettelkasten.iterator();
+        return myZettelkasten.iterator();
     }
 
     /**@param zk            Der zu speichernde Zettelkasten
@@ -124,6 +138,11 @@ public class Zettelkasten implements Iterator<Medium>,Iterable<Medium>,Persisten
     @Override
     public Zettelkasten load(String dateiname) {
         throw new UnsupportedOperationException("Operation nicht erlaubt!");
+    }
+
+    @Override
+    public int compareTo(Medium o) {
+        return this.getClass().getName().compareTo(o.getClass().getName());
     }
 }
 

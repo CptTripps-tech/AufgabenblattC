@@ -10,8 +10,6 @@ public class Familie implements Iterable<String>  {
 
     public Familie(String Vater, String Mutter) {
         mitglieder = new ArrayList<>();
-        mitglieder.add(0, Mutter);
-        mitglieder.add(1, Vater);
 
         if (Vater == null || Vater == "") {
             throw new IllegalArgumentException("Name des Vaters fehlt!");
@@ -19,6 +17,8 @@ public class Familie implements Iterable<String>  {
         if (Mutter == null || Mutter == "") {
             throw new IllegalArgumentException("Name der Mutter fehlt!");
         }
+        mitglieder.add(0, Mutter);
+        mitglieder.add(1, Vater);
 
     }
 
@@ -32,8 +32,7 @@ public class Familie implements Iterable<String>  {
 
     @Override public Iterator<String> iterator()
     {
-        Iterator<String> it=mitglieder.iterator();
-        return it;
+        return mitglieder.iterator();
     }
 
 

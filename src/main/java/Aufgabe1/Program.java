@@ -29,10 +29,13 @@ public class Program {
         ArrayList<Person> per = (ArrayList<Person>) in.readObject();
         in.close();
 
-           if(per.equals(hugo.getAdresse())==people.equals(erika.getAdresse())){
+        System.out.println(per);
+
+           if(hugo.getAdresse().equals(erika.getAdresse())){
                System.out.println("True:Adresse wurde nur einmal deserialisiert");
            }
 
-           System.out.println(per);
+        System.out.println(per.equals(hugo.getAdresse()));
+
     }
 }
