@@ -17,7 +17,6 @@ public class Bibliothek {
         zettelkasten.addMedium(new Buch("Duden 01.Die deutsche Rechtschreibung", 2004,
                 "Bibliographisches Institut, Mannheim", "3-411-04013-0", "-"));
         zettelkasten.addMedium(new Zeitschrift("Der Spiegel", 6, 54, "0038-7452"));
-        zettelkasten.addMedium(new Buch("Live at Wembley", 2006, "DVA", "3-411-04013-0", "-"));
 
         zettelkasten.sort("ZA");
         /*try {
@@ -34,11 +33,10 @@ public class Bibliothek {
             System.out.println(medium.calculateRepresentation());
         }
 
+        HumanReadablePersistency human= new HumanReadablePersistency();
+        BinaryPersistency binary=new BinaryPersistency();
 
-
-
-
-        //zettelkasten.save(zettelkasten,"bib.txt");
-
+        human.save(zettelkasten,"bib.txt");
+        binary.save(zettelkasten,"bib.ser");
     }
 }

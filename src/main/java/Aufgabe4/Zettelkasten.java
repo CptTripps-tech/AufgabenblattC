@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-public class Zettelkasten implements Iterable<Medium>,Persistency,Comparable<Medium> {
+public class Zettelkasten implements Iterable<Medium>,Comparable<Medium> {
     private ArrayList<Medium> myZettelkasten;
     private String SORTED = "0";
 
@@ -118,27 +118,6 @@ public class Zettelkasten implements Iterable<Medium>,Persistency,Comparable<Med
         return myZettelkasten.iterator();
     }
 
-    /**@param zk            Der zu speichernde Zettelkasten
-     * @param dateiname     Der Name der Textdatei*/
-    @Override
-    public void save(Zettelkasten zk, String dateiname) {
-        try {
-            BufferedWriter save = new BufferedWriter(new FileWriter(dateiname));
-            for (Medium med : zk) {
-                save.write(med.calculateRepresentation());
-                save.write("\n");
-            }
-            save.close();
-
-        } catch (IOException e) {
-            System.out.println("Datei konnte nicht eingelesen werden");
-        }
-    }
-
-    @Override
-    public Zettelkasten load(String dateiname) {
-        throw new UnsupportedOperationException("Operation nicht erlaubt!");
-    }
 
     @Override
     public int compareTo(Medium o) {
